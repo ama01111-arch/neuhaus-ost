@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuHaus Ost | Electrical Engineering & Infrastructure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080a0d;
+    --dark: #0e1219;
+    --panel: #131820;
+    --border: #1e2733;
+    --accent: #e8a020;
+    --accent2: #f0c060;
+    --text: #c8d4e0;
+    --muted: #607080;
+    --white: #eef2f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4rem;
+    height: 72px;
+    background: rgba(8,10,13,0.92);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--black);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  .hero-bg video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    filter: grayscale(10%);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, rgba(8,10,13,0.55) 30%, rgba(8,10,13,0.1) 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 4rem;
+    max-width: 900px;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.35rem 1rem;
+    margin-bottom: 2rem;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+  .hero p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    transition: background 0.2s;
+  }
+  .hero-cta:hover { background: var(--accent2); }
+  .hero-cta::after { content: '→'; font-size: 1.1em; }
+
+  .hero-stats {
+    position: absolute; bottom: 0; right: 0;
+    display: flex; z-index: 2;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .stat {
+    padding: 1.8rem 2.5rem;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* SECTION WRAPPER */
+  section { padding: 7rem 4rem; }
+  .section-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    text-transform: uppercase;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-bottom: 3rem;
+  }
+
+  /* SERVICES */
+  #services { background: var(--dark); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  .service-card {
+    background: var(--panel);
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { background: #161d27; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+  }
+  .service-card:hover .service-num { color: rgba(232,160,32,0.15); }
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .service-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    height: 500px;
+    padding: 0 18px 18px 0;
+  }
+  .about-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: grayscale(20%) contrast(1.05);
+    position: relative;
+    z-index: 1;
+  }
+  .about-frame {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: calc(100% - 18px);
+    height: calc(100% - 18px);
+    border: 1px solid var(--accent);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .about-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2.5rem;
+  }
+  .highlight {
+    background: var(--panel);
+    padding: 1.5rem;
+  }
+  .highlight strong {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .highlight span {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--dark); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .project-card {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .project-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    filter: grayscale(40%);
+  }
+  .project-card:hover img { transform: scale(1.05); filter: grayscale(0%); }
+  .project-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(8,10,13,0.95) 0%, transparent 60%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.5rem;
+  }
+  .project-overlay h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .project-overlay span {
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* CLIENTS */
+  #clients { background: var(--black); text-align: center; }
+  .clients-note {
+    font-size: 0.9rem;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+  .clients-logos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 2rem;
+  }
+  .client-slot {
+    height: 640px;
+    overflow: hidden;
+  }
+  .client-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: grayscale(40%);
+    transition: filter 0.3s, transform 0.4s;
+    display: block;
+    background: var(--panel);
+  }
+  .client-slot:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+  .contact-info { }
+  .contact-item {
+    margin-bottom: 2.5rem;
+  }
+  .contact-item label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .contact-item p {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .contact-item a { color: var(--text); text-decoration: none; }
+  .contact-item a:hover { color: var(--accent); }
+
+  .contact-form { }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  .form-field label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.85rem 1rem;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus { border-color: var(--accent); }
+  .form-field textarea { height: 120px; }
+  .btn-submit {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .btn-submit:hover { background: var(--accent2); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  footer p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 1.5rem; }
+    .hero-stats { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    #about { grid-template-columns: 1fr; gap: 2rem; }
+    .about-visual { height: 280px; }
+    .about-frame { display: none; }
+    #contact { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>Neu</span>Haus Ost</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="https://videos.pexels.com/video-files/13680349/13680349-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Dubai Silicon Oasis · UAE</div>
+    <h1>Leaders in<em>Electrical Engineering</em></h1>
+    <p>Expert design, consulting, and commissioning of gas power plants and diesel generators. Delivering high-voltage infrastructure across the UAE and beyond since 1993.</p>
+    <a class="hero-cta" href="#contact">Request a Consultation</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">30+</span>
+      <span class="stat-label">Years Active</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">Projects</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">50+</span>
+      <span class="stat-label">Experts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Awards</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal">
+    <div class="section-tag">What We Do</div>
+    <div class="section-title">Our Services</div>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <span class="service-icon">⚡</span>
+      <h3>Design & Consulting</h3>
+      <p>Expert electrical engineering design and consulting tailored to client specifications. Our engineers work closely with stakeholders to ensure every project is perfectly engineered for its requirements.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <span class="service-icon">🏭</span>
+      <h3>Equipment Supply</h3>
+      <p>Comprehensive equipment supply for gas power plants and diesel generators. Partnerships with leading global manufacturers allow us to source high-quality equipment at competitive prices.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <span class="service-icon">🖥️</span>
+      <h3>Commissioning, Maintenance & Automation</h3>
+      <p>Full lifecycle support including commissioning, service maintenance, process automation, and remote monitoring — ensuring every system operates at peak performance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <img class="about-img" src="https://images.pexels.com/photos/36298690/pexels-photo-36298690.jpeg?auto=compress&cs=tinysrgb&w=1200&fit=clip" alt="Industrial electrical infrastructure">
+    <div class="about-frame"></div>
+  </div>
+  <div class="about-text reveal">
+    <div class="section-tag">Who We Are</div>
+    <div class="section-title">About NeuHaus Ost</div>
+    <p>NeuHaus Ost is a leading electrical engineering firm with deep experience across the full project lifecycle — from initial design through commissioning, ongoing maintenance, and remote automation.</p>
+    <p>Founded in 1993 and re-established with a UAE presence in 2022, we specialize in gas stations and diesel generator infrastructure, serving industrial clients who demand precision and reliability.</p>
+    <p>Our team of over 50 engineers and specialists is dedicated to exceeding client expectations on every engagement.</p>
+    <div class="about-highlights">
+      <div class="highlight"><strong>1993</strong><span>Year Established</span></div>
+      <div class="highlight"><strong>500+</strong><span>Projects Completed</span></div>
+      <div class="highlight"><strong>50+</strong><span>Experts Employed</span></div>
+      <div class="highlight"><strong>12</strong><span>Industry Awards</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <div class="section-tag">Portfolio</div>
+    <div class="section-title">Selected Projects</div>
+  </div>
+  <div class="projects-grid reveal">
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1565034957451-f1c3e6ead346?w=600&q=80" alt="Gas Power Plant">
+      <div class="project-overlay">
+        <span>UAE · 2023</span>
+        <h4>Gas Power Station · Dubai</h4>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=600&q=80" alt="Electrical Infrastructure">
+      <div class="project-overlay">
+        <span>Industrial · 2022</span>
+        <h4>Generator Commissioning · Abu Dhabi</h4>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Automation Control">
+      <div class="project-overlay">
+        <span>Automation · 2023</span>
+        <h4>Remote Monitoring System</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="reveal">
+    <div class="section-tag">Trusted By</div>
+    <div class="section-title">Our Clients</div>
+    <p class="clients-note">We have built lasting partnerships with leading industrial groups, energy companies, and governmental bodies across the UAE and the wider region.</p>
+  </div>
+  <div class="clients-logos reveal">
+    <div class="client-slot"><img src="https://images.pexels.com/photos/35792100/pexels-photo-35792100.jpeg?auto=compress&cs=tinysrgb&w=800&h=1280&fit=crop" alt="Client"></div>
+    <div class="client-slot"><img src="https://images.pexels.com/photos/15978384/pexels-photo-15978384.jpeg?auto=compress&cs=tinysrgb&w=800&fit=clip" alt="Client"></div>
+    <div class="client-slot"><img src="https://images.pexels.com/photos/7178310/pexels-photo-7178310.jpeg?auto=compress&cs=tinysrgb&w=800&fit=clip" alt="Client"></div>
+    <div class="client-slot"><img src="https://images.pexels.com/photos/35596449/pexels-photo-35596449.jpeg?auto=compress&cs=tinysrgb&w=800&fit=clip" alt="Client"></div>
+    <div class="client-slot"><img src="https://images.pexels.com/photos/10290624/pexels-photo-10290624.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="Client"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal">
+    <div class="section-tag">Get in Touch</div>
+    <div class="section-title">Contact Us</div>
+
+    <div class="contact-item">
+      <label>Head Office</label>
+      <p>NEUHAUS OST FZCO<br>Dubai Silicon Oasis, DDP, Building A2<br>Dubai, 341041 — UAE</p>
+    </div>
+    <div class="contact-item">
+      <label>Phone</label>
+      <p><a href="tel:+97142285285">+971-4-228-5285</a></p>
+    </div>
+    <div class="contact-item">
+      <label>General Inquiries</label>
+      <p><a href="mailto:info@neuhaus-ost.com">info@neuhaus-ost.com</a></p>
+    </div>
+    <div class="contact-item">
+      <label>Sales & Quotes</label>
+      <p><a href="mailto:Sales@neuhaus-ost.com">Sales@neuhaus-ost.com</a></p>
+    </div>
+    <div class="contact-item">
+      <label>Careers</label>
+      <p><a href="mailto:careers@neuhaus-ost.com">careers@neuhaus-ost.com</a></p>
+    </div>
+  </div>
+
+  <div class="contact-form reveal">
+    <div class="form-row">
+      <div class="form-field">
+        <label>First Name</label>
+        <input type="text" placeholder="John">
+      </div>
+      <div class="form-field">
+        <label>Last Name</label>
+        <input type="text" placeholder="Smith">
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Email</label>
+      <input type="email" placeholder="john@company.com">
+    </div>
+    <div class="form-field">
+      <label>Subject</label>
+      <input type="text" placeholder="Project Inquiry">
+    </div>
+    <div class="form-field">
+      <label>Message</label>
+      <textarea placeholder="Tell us about your project requirements..."></textarea>
+    </div>
+    <button class="btn-submit" onclick="this.textContent='Message Sent ✓'; this.style.background='#2a6e40'">Send Message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>Neu</span>Haus Ost</div>
+  <p>© 2024 NeuHaus Ost FZCO. All rights reserved. Dubai, UAE.</p>
+  <p>Dubai Silicon Oasis, DDP, Building A2</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
